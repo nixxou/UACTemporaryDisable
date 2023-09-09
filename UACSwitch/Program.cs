@@ -14,13 +14,6 @@ internal class Program
 			{
 				ExecuteTask("TempDisableUAC");
 			}
-			else
-			{
-				ProcessStartInfo startInfo = new ProcessStartInfo(current_exe);
-				startInfo.Verb = "runas";
-				Process.Start(startInfo);
-				return;
-			}
 			return;
 		}
 		else
@@ -98,6 +91,8 @@ internal class Program
 		startInfo.FileName = "schtasks";
 		startInfo.Arguments = new_cmd;
 		startInfo.Verb = "runas";
+		startInfo.UseShellExecute = false;
+		startInfo.CreateNoWindow = true;
 		var TaskProcess = System.Threading.Tasks.Task.Run(() => Process.Start(startInfo));
 		TaskProcess.Wait();
 	}
